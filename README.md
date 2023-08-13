@@ -3,16 +3,18 @@
 ````py
 class Solution:
     def generate(self, numRows: int) -> List[List[int]]:
-        
-        ans = [[1], [1,1]]
+        res = [[1]] # List[List[int]] base 1
+        for i in range(numRows-1): # as above one is already created
+            #prepare to create new row
+            temp = [0] + res[-1] + [0] # res[-1]=[1,1]=> [0,1,1,0]
+            row = [] # new row
+            # res[-1] represent last list of res
+            # need to be 1 more element in range
+            for j in range(len(res[-1]) + 1): # 2 + 1   
+                row.append(temp[j] + temp[j+1] ) # row = [1, 2, 1]
+            res.append(row)
+        return res
+            
 
-        for row_num in range(2, numRows):
-            # formatted excluded 2 from side
-             # start from next row e.g. 3rd row 
-            els = row_num + 1
-            row  = [1] + [0 for i in range(els - 2)] + [1]  #exclude 2 elements
-            for j in range(1, els-1):
-                row[j] = ans[row_num - 1][j-1] + ans[row_num - 1][j]
-            ans.append(row)
-        return ans[0: numRows]
+
 ````
